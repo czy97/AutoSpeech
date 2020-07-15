@@ -6,3 +6,4 @@ config/__pycache__/**
 data_objects/__pycache__/**
 logs_scratch/**
 VoxCeleb1/
+.vscode/
