@@ -11,11 +11,11 @@ def partition_voxceleb(feature_root, split_txt_path):
     for line in split_txt:
         items = line.strip().split()
         if items[0] == '3':
-            test_set.append(items[1])
+            test_set.append(items[1].split('/')[1])
         elif items[0] == '2':
-            val_set.append(items[1])
+            val_set.append(items[1].split('/')[1])
         else:
-            train_set.append(items[1])
+            train_set.append(items[1].split('/')[1])
 
     speakers = os.listdir(feature_root)
 
@@ -31,7 +31,8 @@ def partition_voxceleb(feature_root, split_txt_path):
         test = []
         for line in speaker_files:
             address = line.strip().split(',')[1]
-            fname = os.path.join(*address.split('/')[-3:])
+            # fname = os.path.join(*address.split('/')[-3:])
+            fname = address.split('/')[-1][:11]
             if fname in test_set:
                 test.append(line)
             elif fname in val_set:
