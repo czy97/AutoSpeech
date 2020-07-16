@@ -7,7 +7,7 @@ CUDNN:
   ENABLED: true
 
 DATASET:
-  DATA_DIR: '/path/to/VoxCeleb'
+  DATA_DIR: '/mnt/lustre/sjtu/home/czy97/sid/AutoSpeech/VoxCeleb1'
   NUM_WORKERS: 0
   PARTIAL_N_FRAMES: 300
 
