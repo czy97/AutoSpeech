@@ -116,7 +116,7 @@ def main():
 
     # dataloader
     train_dataset = DeepSpeakerDataset(
-        Path(cfg.DATASET.DATA_DIR), cfg.DATASET.PARTIAL_N_FRAMES, 'train')
+        Path(cfg.DATASET.DATA_DIR), cfg.DATASET.PARTIAL_N_FRAMES, cfg.DATASET.DATASET)
     train_loader = torch.utils.data.DataLoader(
         dataset=train_dataset,
         batch_size=cfg.TRAIN.BATCH_SIZE,
@@ -156,7 +156,10 @@ def main():
         train_from_scratch(cfg, model, optimizer, train_loader, criterion, epoch, writer_dict)
 
         if epoch % cfg.VAL_FREQ == 0 or epoch == cfg.TRAIN.END_EPOCH - 1:
-            acc = validate_identification(cfg, model, test_loader, criterion)
+            if cfg.DATASET.DATASET == 'veri_train':
+                acc = 0.0
+            else:
+                acc = validate_identification(cfg, model, test_loader, criterion)
 
             # remember best acc@1 and save checkpoint
             is_best = acc > best_acc1
