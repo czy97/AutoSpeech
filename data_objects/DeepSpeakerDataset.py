@@ -32,7 +32,7 @@ class DeepSpeakerDataset(data.Dataset):
         if self.partition == 'veri_train':
             self.speakers = []
             for speaker_dir in speaker_dirs:
-                if speaker_dir.name[4] != 'E':
+                if speaker_dir.name.strip().split('/')[-1][4] != 'E':
                     self.speakers.append(Speaker(speaker_dir, None))
         else:
             self.speakers = [Speaker(speaker_dir, self.partition) for speaker_dir in speaker_dirs]
