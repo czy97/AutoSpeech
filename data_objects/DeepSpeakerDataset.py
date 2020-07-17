@@ -29,7 +29,13 @@ class DeepSpeakerDataset(data.Dataset):
         if len(speaker_dirs) == 0:
             raise Exception("No speakers found. Make sure you are pointing to the directory "
                             "containing all preprocessed speaker directories.")
-        self.speakers = [Speaker(speaker_dir, self.partition) for speaker_dir in speaker_dirs]
+        if self.partition == 'veri_train':
+            self.speakers = []
+            for speaker_dir in speaker_dirs:
+                if speaker_dir.name[4] != 'E':
+                    self.speakers.append(Speaker(speaker_dir, None))
+        else:
+            self.speakers = [Speaker(speaker_dir, self.partition) for speaker_dir in speaker_dirs]
 
         classes, class_to_idx = find_classes(self.speakers)
         sources = []
