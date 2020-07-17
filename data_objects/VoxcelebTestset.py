@@ -5,12 +5,19 @@ from torchvision import transforms as T
 from data_objects.transforms import Normalize, generate_test_sequence
 
 
-def get_test_paths(pairs_path, db_dir):
+def get_test_paths(pairs_path, db_dir, meta_path):
+    id2name = {}
+    with open(meta_path, 'r') as f:
+        lines = f.readlines()
+        lines = lines[1:]
+        for line in lines:
+            line = line.strip().split()
+            id2name[line[0]] = line[1]
     def convert_folder_name(path):
         basename = os.path.splitext(path)[0]
         items = basename.split('/')
-        speaker_dir = 'wav_{}'.format(items[0])
-        fname = '{}_{}.npy'.format(items[1], items[2])
+        speaker_dir = 'wav_{}'.format(id2name[items[0]])
+        fname = '{}_00{}.npy'.format(items[1], items[2])
         p = os.path.join(speaker_dir, fname)
         return p
 
@@ -44,7 +51,8 @@ class VoxcelebTestset(data.Dataset):
         self.data_dir = data_dir
         self.root = data_dir.joinpath('feature')
         self.test_pair_txt_fpath = data_dir.joinpath('veri_test.txt')
-        self.test_pairs = get_test_paths(self.test_pair_txt_fpath, self.root)
+        self.meta_txt_fpath = data_dir.joinpath('vox1_meta.csv')
+        self.test_pairs = get_test_paths(self.test_pair_txt_fpath, self.root, self.meta_txt_fpath)
         self.partial_n_frames = partial_n_frames
         mean = np.load(self.data_dir.joinpath('mean.npy'))
         std = np.load(self.data_dir.joinpath('std.npy'))
