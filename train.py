@@ -153,7 +153,7 @@ def main():
         model.train()
         model.drop_path_prob = cfg.MODEL.DROP_PATH_PROB * epoch / cfg.TRAIN.END_EPOCH
 
-        train_from_scratch(cfg, model, optimizer, train_loader, criterion, epoch, writer_dict)
+        train_from_scratch(cfg, model, optimizer, train_loader, criterion, epoch, writer_dict,lr_scheduler)
 
         if epoch % cfg.VAL_FREQ == 0 or epoch == cfg.TRAIN.END_EPOCH - 1:
             if cfg.DATASET.DATASET == 'veri_train':
