@@ -8,7 +8,8 @@ CUDNN:
 
 DATASET:
   DATA_DIR: '/mnt/lustre/sjtu/home/czy97/sid/AutoSpeech/VoxCeleb1'
-  NUM_WORKERS: 0
+  DATASET: 'train'
+  NUM_WORKERS: 16
   PARTIAL_N_FRAMES: 300
 
 TRAIN:
